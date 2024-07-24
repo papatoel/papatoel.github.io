@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $('head').load('head.html')
+            $('#header').load('header.html')
+        })
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="load_data()">
+    <div id="header"></div>
+
+    <div class="col-5 bg-light p-3 border mx-auto mt-5">
+        <button id="add_new_data" type="button" class="btn btn-success mb-2" onclick="add_new_data()">Add New Data</button>
+        <table id="tb1" class="table table-bordered border border-dark border-3 table-striped table-hover">
+            <thead>
+              <tr class="table-success">
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">PHONE</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let sid = []
+        let sname = []
+        let phone = []
+        let tb1 = document.getElementById('tb1').getElementsByTagName('tbody')[0]
+        let row 
+
+        function load_data(){
+            sid = JSON.parse(localStorage.getItem('sid'))
+            sname = JSON.parse(localStorage.getItem('sname'))
+            phone = JSON.parse(localStorage.getItem('phone'))
+
+            if(sid == null && sname == null && phone == null ){
+                sid = []
+                sname = []
+                phone = []
+            }
+
+            tb1.inertHTML = ''
+
+            for(let i = 0; i < sid.length; i++){
+                row = tb1.insertRow()
+                row.insertCell().innerHTML = sid[i]
+                row.insertCell().innerHTML = sname[i]
+                row.insertCell().innerHTML = phone[i]
+                row.insertCell().innerHTML = '<button type="button" class="btn btn-success">Edit</button> <button type="button" class="btn btn-danger">Delete</button>'
+            }
+
+        }
+
+        function add_new_data(){
+            row = tb1.insertRow()
+            row.insertCell().innerHTML = '<input type="number" class="form-control" id="sid">'
+            row.insertCell().innerHTML = '<input type="text" class="form-control" id="sname">'
+            row.insertCell().innerHTML = '<input type="number" class="form-control" id="phone">'
+            row.insertCell().innerHTML = ''
+
+            document.getElementById('add_new_data').disabled = true
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+
+</html>
